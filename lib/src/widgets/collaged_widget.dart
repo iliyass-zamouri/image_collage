@@ -114,9 +114,18 @@ class ImageCollageState extends State<ImageCollage> {
                     ),
                     Positioned.fill(
                       child: Container(
-                        decoration:
-                            BoxDecoration(color: Colors.black.withOpacity(0.2)),
-                        child: Text('+${widget.images.length - 3}'),
+                        decoration: BoxDecoration(
+                            color: widget.style.showMoreBackgroundColor
+                                .withOpacity(
+                                    widget.style.showMoreBackgroundOpacity)),
+                        child: Center(
+                          child: Text(
+                            widget.style.showMore != ""
+                                ? widget.style.showMore
+                                : '+${widget.images.length - 3}',
+                            style: widget.style.showMoreTextStyle,
+                          ),
+                        ),
                       ),
                     )
                   ],
