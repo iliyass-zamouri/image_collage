@@ -1,6 +1,8 @@
-# Flutter Agenda View
+# Image Collage
 
-Image Collage
+Easy to use image collage.
+with support of network images and assets images.
+Auto layout and on Image Click. 
 
 # Features
 
