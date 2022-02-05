@@ -8,11 +8,11 @@ Auto layout and on Image Click.
 
 ## Image
 
-<img src="images/screenshot.png" width="400" />
+<img src="https://raw.githubusercontent.com/iliyass-zamouri/image_collage/main/images/screenshot.png" width="300" />
 
 ## Video Recording
 
-<img src="images/screenrecord.gif" height="440" />  
+<img src="https://raw.githubusercontent.com/iliyass-zamouri/image_collage/main/images/screenrecord.gif" height="440" />  
 
 # Install
 
