@@ -8,11 +8,13 @@ class ShowImage extends StatelessWidget {
   final Img image;
   final ImageLayout layout;
   final CollageStyle style;
+  final Function(Img) callBack;
   final bool isLast;
   const ShowImage(
       {Key? key,
       required this.image,
       required this.style,
+      required this.callBack,
       required this.layout,
       this.isLast = false})
       : super(key: key);
@@ -30,7 +32,7 @@ class ShowImage extends StatelessWidget {
     switch (image.source) {
       case ImageSource.assets:
         return GestureDetector(
-          onTap: image.onTap,
+          onTap: callBack(image),
           child: Image.asset(
             image.image,
             height: layout == ImageLayout.full
@@ -48,7 +50,7 @@ class ShowImage extends StatelessWidget {
         );
       case ImageSource.network:
         return GestureDetector(
-          onTap: image.onTap,
+          onTap: callBack(image),
           child: Image.network(
             image.image,
             height: layout == ImageLayout.full
@@ -66,7 +68,7 @@ class ShowImage extends StatelessWidget {
         );
       default:
         return GestureDetector(
-          onTap: image.onTap,
+          onTap: callBack(image),
           child: Container(
             color: style.noImageBackgroundColor,
             height: layout == ImageLayout.full
