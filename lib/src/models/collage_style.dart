@@ -22,7 +22,7 @@ class CollageStyle {
 
   const CollageStyle({
     this.size = 0,
-    this.noImageText = "No Image",
+    this.noImageText = "Unable to load",
     this.showMoreBackgroundColor = Colors.black,
     this.showMoreBackgroundOpacity = 0.5,
     this.noImageTextStyle = const TextStyle(

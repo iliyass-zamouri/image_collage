@@ -7,10 +7,14 @@ import 'package:image_collage/src/widgets/show_image.dart';
 
 class ImageCollage extends StatefulWidget {
   final List<Img> images;
-
+  final Function(Img, List<Img>)? onClick;
   final CollageStyle style;
+
   const ImageCollage(
-      {Key? key, required this.images, this.style = const CollageStyle()})
+      {Key? key,
+      required this.images,
+      this.onClick,
+      this.style = const CollageStyle()})
       : super(key: key);
 
   @override
@@ -46,6 +50,7 @@ class ImageCollageState extends State<ImageCollage> {
       case 1:
         return ShowImage(
           image: widget.images.first,
+          callBack: (image) => widget.onClick!(image, widget.images),
           style: widget.style,
           layout: ImageLayout.full,
         );
@@ -54,11 +59,13 @@ class ImageCollageState extends State<ImageCollage> {
           children: [
             ShowImage(
               image: widget.images[0],
+              callBack: (image) => widget.onClick!(image, widget.images),
               style: widget.style,
               layout: ImageLayout.half,
             ),
             ShowImage(
               image: widget.images[1],
+              callBack: (image) => widget.onClick!(image, widget.images),
               style: widget.style,
               layout: ImageLayout.half,
             )
@@ -70,6 +77,7 @@ class ImageCollageState extends State<ImageCollage> {
           children: [
             ShowImage(
               image: widget.images[0],
+              callBack: (image) => widget.onClick!(image, widget.images),
               style: widget.style,
               layout: ImageLayout.half,
             ),
@@ -77,11 +85,13 @@ class ImageCollageState extends State<ImageCollage> {
               children: [
                 ShowImage(
                   image: widget.images[1],
+                  callBack: (image) => widget.onClick!(image, widget.images),
                   style: widget.style,
                   layout: ImageLayout.quarter,
                 ),
                 ShowImage(
                   image: widget.images[2],
+                  callBack: (image) => widget.onClick!(image, widget.images),
                   style: widget.style,
                   layout: ImageLayout.quarter,
                 ),
@@ -94,6 +104,7 @@ class ImageCollageState extends State<ImageCollage> {
           children: [
             ShowImage(
               image: widget.images[0],
+              callBack: (image) => widget.onClick!(image, widget.images),
               style: widget.style,
               layout: ImageLayout.half,
             ),
@@ -101,6 +112,7 @@ class ImageCollageState extends State<ImageCollage> {
               children: [
                 ShowImage(
                   image: widget.images[1],
+                  callBack: (image) => widget.onClick!(image, widget.images),
                   style: widget.style,
                   layout: ImageLayout.quarter,
                 ),
@@ -109,21 +121,27 @@ class ImageCollageState extends State<ImageCollage> {
                   children: [
                     ShowImage(
                       image: widget.images[2],
+                      callBack: (image) =>
+                          widget.onClick!(image, widget.images),
                       style: widget.style,
                       layout: ImageLayout.quarter,
                     ),
                     Positioned.fill(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: widget.style.showMoreBackgroundColor
-                                .withOpacity(
-                                    widget.style.showMoreBackgroundOpacity)),
-                        child: Center(
-                          child: Text(
-                            widget.style.showMore != ""
-                                ? widget.style.showMore
-                                : '+${widget.images.length - 3}',
-                            style: widget.style.showMoreTextStyle,
+                      child: GestureDetector(
+                        onTap: () =>
+                            widget.onClick!(widget.images[3], widget.images),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: widget.style.showMoreBackgroundColor
+                                  .withOpacity(
+                                      widget.style.showMoreBackgroundOpacity)),
+                          child: Center(
+                            child: Text(
+                              widget.style.showMore != ""
+                                  ? widget.style.showMore
+                                  : '+${widget.images.length - 3}',
+                              style: widget.style.showMoreTextStyle,
+                            ),
                           ),
                         ),
                       ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:image_collage/image_collage.dart';
 import 'package:like_button/like_button.dart';
@@ -87,7 +89,13 @@ class _CollageState extends State<Collage> {
                           children: [Text("Post 2"), Icon(Icons.more_vert)],
                         ),
                       ),
-                      ImageCollage(images: images1),
+                      ImageCollage(
+                        images: images1,
+                        onClick: (clickedImage, images) {
+                          inspect(clickedImage);
+                          inspect(images);
+                        },
+                      ),
                       Padding(
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 10),

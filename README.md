@@ -8,11 +8,11 @@ Auto layout and on Image Click.
 
 ## Image
 
-<img src="images/screenshot.png" width="400" />
+<img src="https://raw.githubusercontent.com/iliyass-zamouri/image_collage/main/images/screenshot.png" width="400" />
 
 ## Video Recording
 
-<img src="images/screenrecord.gif" height="440" />  
+<img src="https://raw.githubusercontent.com/iliyass-zamouri/image_collage/main/images/screenrecord.gif" height="440" />  
 
 # Install
 
@@ -36,7 +36,16 @@ Container(
     color: Colors.white,
     child: Column(
         children: [
-            ImageCollage(images: images),
+            ImageCollage(
+                images: images,
+                onClick: (clickedImg, images){
+                    inspect(clickedImg)
+                    //you can create a screen to expand the view and give clickedImg to show it
+                    // because its the user selected image 
+                    //and the other images for the ability to swipe between them all.
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ImageViewer(clickedImg: clickedImg, images: images )));
+                }
+            ),
         ],
     ),
 ),
