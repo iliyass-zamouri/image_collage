@@ -1,5 +1,5 @@
 # Image Collage
-
+![Pub Version](https://img.shields.io/pub/v/image_collage?label=Image%20Collage&logo=flutter)
 Easy to use image collage.
 with support of network images and assets images.
 Auto layout and on Image Click. 
