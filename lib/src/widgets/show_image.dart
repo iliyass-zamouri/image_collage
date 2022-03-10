@@ -1,38 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:image_collage/src/models/collage_style.dart';
 import 'package:image_collage/src/models/image.dart';
 import 'package:image_collage/src/models/image_layout.dart';
 import 'package:image_collage/src/models/image_source.dart';
 
 class ShowImage extends StatelessWidget {
-  final Img image;
-  final ImageLayout layout;
-  final CollageStyle style;
-  final Function(Img) callBack;
-  final bool isLast;
+  // Widget that render each image
   const ShowImage(
       {Key? key,
       required this.image,
-      required this.style,
+      required this.margin,
+      required this.width,
+      required this.noImageText,
+      required this.noImageBackgroundColor,
       required this.callBack,
       required this.layout,
       this.isLast = false})
       : super(key: key);
+  // image object
+  final Img image;
+  // layout:  full, half, quarter
+  final ImageLayout layout;
+  // margin
+  final EdgeInsets margin;
+  // no Image Background Color
+  final Color noImageBackgroundColor;
+  // no Image Text
+  final String noImageText;
+  // width & height are linked to each other width = height = valueBelow
+  final double width;
+  // call back with the image
+  final Function(Img) callBack;
+  // is last to show the showmore
+  final bool isLast;
 
   @override
   Widget build(BuildContext context) {
     late double size;
-    if (style.size == 0) {
-      size = MediaQuery.of(context).size.width -
-          style.margin.left -
-          style.margin.right;
+    if (width == 0) {
+      size = MediaQuery.of(context).size.width - margin.left - margin.right;
     } else {
-      size = style.size;
+      size = width;
     }
     switch (image.source) {
       case ImageSource.assets:
         return GestureDetector(
-          onTap: callBack(image),
+          onTap: () => callBack(image),
           child: Image.asset(
             image.image,
             height: layout == ImageLayout.full
@@ -50,7 +62,7 @@ class ShowImage extends StatelessWidget {
         );
       case ImageSource.network:
         return GestureDetector(
-          onTap: callBack(image),
+          onTap: () => callBack(image),
           child: Image.network(
             image.image,
             height: layout == ImageLayout.full
@@ -68,9 +80,9 @@ class ShowImage extends StatelessWidget {
         );
       default:
         return GestureDetector(
-          onTap: callBack(image),
+          onTap: () => callBack(image),
           child: Container(
-            color: style.noImageBackgroundColor,
+            color: noImageBackgroundColor,
             height: layout == ImageLayout.full
                 ? size
                 : layout == ImageLayout.half
@@ -81,7 +93,7 @@ class ShowImage extends StatelessWidget {
                 : layout == ImageLayout.half
                     ? size / 2
                     : size / 2,
-            child: Text(style.noImageText),
+            child: Text(noImageText),
           ),
         );
     }

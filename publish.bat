@@ -10,9 +10,10 @@ IF /I "%PUBSPEC%" NEQ "y" GOTO END
 @echo on
 
 powershell -Command " & git add ."
-powershell -Command " & git commit -m '%1'"
+powershell -Command " & git commit -m %1"
 powershell -Command " & git push origin main"
 powershell -Command " & dart pub publish"
 
 :END
 endlocal
+

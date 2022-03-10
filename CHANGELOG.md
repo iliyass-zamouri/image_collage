@@ -1,3 +1,7 @@
+## 0.0.4
+
+* Fixing lints & soundnull safety issues & providing docs 
+
 ## 0.0.3
 
 * Unifying the click into the ImageCollage itself.

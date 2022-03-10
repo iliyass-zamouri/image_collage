@@ -169,7 +169,10 @@ class _CollageState extends State<Collage> {
                           children: [Text("Post 1"), Icon(Icons.more_vert)],
                         ),
                       ),
-                      ImageCollage(images: images2),
+                      ImageCollage(
+                        images: [],
+                        widthSize: 400,
+                      ),
                       Padding(
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 10),
