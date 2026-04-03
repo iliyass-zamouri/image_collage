@@ -21,7 +21,9 @@ class ImageCollage extends StatefulWidget {
         color: Colors.white, fontWeight: FontWeight.w600, fontSize: 36),
     this.noImageBackgroundColor = Colors.white,
     this.margin = const EdgeInsets.all(0),
+    this.spacing = 0,
   })  : assert(showMoreBackgroundOpacity <= 1),
+        assert(spacing >= 0),
         super(key: key);
 
   // list of the images
@@ -56,6 +58,9 @@ class ImageCollage extends StatefulWidget {
   final TextStyle noImageTextStyle;
 
   // no image background color
+  // spacing between images in the collage.
+  final double spacing;
+
   final Color noImageBackgroundColor;
 
   @override
@@ -87,6 +92,8 @@ class ImageCollageState extends State<ImageCollage> {
   }
 
   Widget _buildLayout(context) {
+    final double spacing = widget.spacing;
+
     switch (widget.images.length) {
       case 0:
         return Container(
@@ -116,123 +123,146 @@ class ImageCollageState extends State<ImageCollage> {
       case 2:
         return Row(
           children: [
-            ShowImage(
-              image: widget.images[0],
-              callBack: (image) => widget.onClick!(image, widget.images),
-              layout: ImageLayout.half,
-              margin: widget.margin,
-              noImageBackgroundColor: widget.noImageBackgroundColor,
-              noImageText: '',
-              width: widget.widthSize,
+            Expanded(
+              child: ShowImage(
+                image: widget.images[0],
+                callBack: (image) => widget.onClick!(image, widget.images),
+                layout: ImageLayout.half,
+                margin: widget.margin,
+                noImageBackgroundColor: widget.noImageBackgroundColor,
+                noImageText: '',
+                width: widget.widthSize,
+              ),
             ),
-            ShowImage(
-              image: widget.images[1],
-              callBack: (image) => widget.onClick!(image, widget.images),
-              layout: ImageLayout.half,
-              margin: widget.margin,
-              noImageBackgroundColor: widget.noImageBackgroundColor,
-              noImageText: '',
-              width: widget.widthSize,
+            if (spacing > 0) SizedBox(width: spacing),
+            Expanded(
+              child: ShowImage(
+                image: widget.images[1],
+                callBack: (image) => widget.onClick!(image, widget.images),
+                layout: ImageLayout.half,
+                margin: widget.margin,
+                noImageBackgroundColor: widget.noImageBackgroundColor,
+                noImageText: '',
+                width: widget.widthSize,
+              ),
             )
-          ].expandEqually().toList(),
+          ],
         );
-
       case 3:
         return Row(
           children: [
-            ShowImage(
-              image: widget.images[0],
-              callBack: (image) => widget.onClick!(image, widget.images),
-              layout: ImageLayout.half,
-              margin: widget.margin,
-              noImageBackgroundColor: widget.noImageBackgroundColor,
-              noImageText: '',
-              width: widget.widthSize,
+            Expanded(
+              child: ShowImage(
+                image: widget.images[0],
+                callBack: (image) => widget.onClick!(image, widget.images),
+                layout: ImageLayout.half,
+                margin: widget.margin,
+                noImageBackgroundColor: widget.noImageBackgroundColor,
+                noImageText: '',
+                width: widget.widthSize,
+              ),
             ),
-            Column(
-              children: [
-                ShowImage(
-                  image: widget.images[1],
-                  callBack: (image) => widget.onClick!(image, widget.images),
-                  layout: ImageLayout.quarter,
-                  margin: widget.margin,
-                  noImageBackgroundColor: widget.noImageBackgroundColor,
-                  noImageText: '',
-                  width: widget.widthSize,
-                ),
-                ShowImage(
-                  image: widget.images[2],
-                  callBack: (image) => widget.onClick!(image, widget.images),
-                  layout: ImageLayout.quarter,
-                  margin: widget.margin,
-                  noImageBackgroundColor: widget.noImageBackgroundColor,
-                  noImageText: '',
-                  width: widget.widthSize,
-                ),
-              ].expandEqually().toList(),
-            )
-          ].expandEqually().toList(),
-        );
-      default:
-        return Row(
-          children: [
-            ShowImage(
-              image: widget.images[0],
-              callBack: (image) => widget.onClick!(image, widget.images),
-              layout: ImageLayout.half,
-              margin: widget.margin,
-              noImageBackgroundColor: widget.noImageBackgroundColor,
-              noImageText: '',
-              width: widget.widthSize,
-            ),
-            Column(
-              children: [
-                ShowImage(
-                  image: widget.images[1],
-                  callBack: (image) => widget.onClick!(image, widget.images),
-                  layout: ImageLayout.quarter,
-                  margin: widget.margin,
-                  noImageBackgroundColor: widget.noImageBackgroundColor,
-                  noImageText: '',
-                  width: widget.widthSize,
-                ),
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ShowImage(
-                      image: widget.images[2],
-                      callBack: (image) =>
-                          widget.onClick!(image, widget.images),
+            if (spacing > 0) SizedBox(width: spacing),
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ShowImage(
+                      image: widget.images[1],
+                      callBack: (image) => widget.onClick!(image, widget.images),
                       layout: ImageLayout.quarter,
                       margin: widget.margin,
                       noImageBackgroundColor: widget.noImageBackgroundColor,
                       noImageText: '',
                       width: widget.widthSize,
                     ),
-                    Positioned.fill(
-                      child: GestureDetector(
-                        onTap: () =>
-                            widget.onClick!(widget.images[3], widget.images),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: widget.showMoreBackgroundColor.withOpacity(
-                                  widget.showMoreBackgroundOpacity)),
-                          child: Center(
-                            child: Text(
-                              widget.showMore != ""
-                                  ? widget.showMore
-                                  : '+${widget.images.length - 3}',
-                              style: widget.showMoreTextStyle,
+                  ),
+                  if (spacing > 0) SizedBox(height: spacing),
+                  Expanded(
+                    child: ShowImage(
+                      image: widget.images[2],
+                      callBack: (image) => widget.onClick!(image, widget.images),
+                      layout: ImageLayout.quarter,
+                      margin: widget.margin,
+                      noImageBackgroundColor: widget.noImageBackgroundColor,
+                      noImageText: '',
+                      width: widget.widthSize,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        );
+      default:
+        return Row(
+          children: [
+            Expanded(
+              child: ShowImage(
+                image: widget.images[0],
+                callBack: (image) => widget.onClick!(image, widget.images),
+                layout: ImageLayout.half,
+                margin: widget.margin,
+                noImageBackgroundColor: widget.noImageBackgroundColor,
+                noImageText: '',
+                width: widget.widthSize,
+              ),
+            ),
+            if (spacing > 0) SizedBox(width: spacing),
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ShowImage(
+                      image: widget.images[1],
+                      callBack: (image) => widget.onClick!(image, widget.images),
+                      layout: ImageLayout.quarter,
+                      margin: widget.margin,
+                      noImageBackgroundColor: widget.noImageBackgroundColor,
+                      noImageText: '',
+                      width: widget.widthSize,
+                    ),
+                  ),
+                  if (spacing > 0) SizedBox(height: spacing),
+                  Expanded(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ShowImage(
+                          image: widget.images[2],
+                          callBack: (image) =>
+                              widget.onClick!(image, widget.images),
+                          layout: ImageLayout.quarter,
+                          margin: widget.margin,
+                          noImageBackgroundColor: widget.noImageBackgroundColor,
+                          noImageText: '',
+                          width: widget.widthSize,
+                        ),
+                        Positioned.fill(
+                          child: GestureDetector(
+                            onTap: () => widget.onClick!(widget.images[3], widget.images),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: widget.showMoreBackgroundColor
+                                      .withOpacity(widget.showMoreBackgroundOpacity)),
+                              child: Center(
+                                child: Text(
+                                  widget.showMore != ""
+                                      ? widget.showMore
+                                      : '+${widget.images.length - 3}',
+                                  style: widget.showMoreTextStyle,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ].expandEqually().toList(),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             )
-          ].expandEqually().toList(),
+          ],
         );
     }
   }

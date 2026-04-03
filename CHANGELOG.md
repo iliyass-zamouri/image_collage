@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Add `ImageCollage.spacing` to control padding between images in the collage.
+
 ## 0.0.4
 
 * Fixing lints & soundnull safety issues & providing docs 

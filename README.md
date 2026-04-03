@@ -39,6 +39,7 @@ Container(
         children: [
             ImageCollage(
                 images: images,
+                spacing: 8.0,
                 onClick: (clickedImg, images){
                     inspect(clickedImg)
                     //you can create a screen to expand the view and give clickedImg to show it

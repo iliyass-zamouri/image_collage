@@ -20,7 +20,7 @@ class ShowImage extends StatelessWidget {
   final Img image;
   // layout:  full, half, quarter
   final ImageLayout layout;
-  // margin
+  // margin (for backwards compatibility, not used for child layout now)
   final EdgeInsets margin;
   // no Image Background Color
   final Color noImageBackgroundColor;
@@ -35,13 +35,39 @@ class ShowImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late double size;
-    if (width == 0) {
-      size = MediaQuery.of(context).size.width - margin.left - margin.right;
-    } else {
-      size = width;
-    }
+    Widget imageWidget;
     switch (image.source) {
+      case ImageSource.assets:
+        imageWidget = Image.asset(
+          image.image,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+        );
+        break;
+      case ImageSource.network:
+        imageWidget = Image.network(
+          image.image,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+        );
+        break;
+      default:
+        imageWidget = Container(
+          color: noImageBackgroundColor,
+          alignment: Alignment.center,
+          child: Text(noImageText),
+        );
+        break;
+    }
+
+    return GestureDetector(
+      onTap: () => callBack(image),
+      child: SizedBox.expand(
+        child: imageWidget,
+      ),
+    );
       case ImageSource.assets:
         return GestureDetector(
           onTap: () => callBack(image),
